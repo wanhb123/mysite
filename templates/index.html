@@ -1,0 +1,15 @@
+<h1>用户展示</h1>
+<table border="1">
+    <thead>
+        <th>用户名</th>
+        <th>密码</th>
+    </thead>
+    <tbody>
+        {% for line in data %}
+            <tr>
+            <td>{{line.user}}</td>
+            <td>{{line.pwd}}</td>
+            </tr>
+        {% endfor %}
+    </tbody>
+</table>
