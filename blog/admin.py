@@ -1,13 +1,11 @@
-from django.contrib import admin
-from .models import Question, Choice
 # Register your models here.
+from django.contrib import admin
+from .models import UserInfo
+
+admin.site.site_header = 'Blog管理后台'
+admin.site.site_title = '我的 博客'
 
 
-class QuestionAdmin(admin.ModelAdmin):
-    list_display = ('question_text', 'pub_date', 'choice_text', 'question_id', 'votes')
-    search_fields = ('question_text',)
-    list_filter = ['question_text']
-    list_per_page = 1
-
-
-admin.site.register([Question, Choice])
+@admin.register(UserInfo)
+class UserAdmin(admin.ModelAdmin):
+    list_display = ('username', 'password', 'email')
