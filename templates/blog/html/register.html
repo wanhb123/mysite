@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>登录</title>
+    <style>
+        div img{
+            display:inline-block;
+            width:130px;
+            height:80px;
+            vertical-align: 0px;
+        }
+        div p{
+            display: inline-block;
+            width:130px;
+            height:80px;
+            margin-left: 10px;
+            text-align:center;
+            line-height:50px;
+            vertical-align:33px;
+        }
+        div a{
+            display: inline-block;
+            width:130px;
+            height:80px;
+            text-align:right;
+            vertical-align: 0px;
+        }
+        input{
+            display: inline-block;
+            width:300px;
+            height:30px;
+        }
+        #o666{
+            width:10px;
+            height:10px;
+        }
+        .four{
+            width:300px;
+        }
+        .yan{
+            width:181px;
+            height:36px;
+        }
+        label{
+            font-size:12px;
+            vertical-align:1px;
+        }
+        .zhu{
+            display:inline-block;
+            margin-left: 55px;
+            background-color:blue;
+            color:white;
+            padding:0px;
+            border-width:0px;
+            height:46px;
+        }
+         .shell{
+             text-align: right;
+             height: 300px;
+             width: 300px;
+             background-color: floralwhite;
+         }
+
+    </style>
+</head>
+<body>
+<div>
+    <img src="https://ss1.bdstatic.com/70cFvXSh_Q1YnxGkpoWK1HF6hhy/it/u=3572347546,3948256807&fm=27&gp=0.jpg" alt="logo">
+    <p>注册 账号</p>
+</div>
+    <form action = "" method = "post">
+        {% csrf_token %}
+        <p>用户名&nbsp;<input type = "text" name = "username" placeholder="请输入用户名" ><span style ="color:red"></span></p>
+        <p>密&emsp;码&nbsp;<input type="password" name = "password" placeholder="请输入用户密码" /><span style ="color:red"></span></p>
+        <p>邮&emsp;箱&nbsp;<input type = "text" name = 'email' placeholder="请输入用户邮箱" class = "four"/>&nbsp;<span style ="color:red"></span>
+        <p>
+            <input type = "checkbox" id = "o666">
+            <label for="o666">阅读并接受《用户协议》和《隐私保护声明》</label>
+        </p>
+        <p>
+            <input type = "submit" value = "注册" class = "zhu">
+        </p>
+    </form>
+
+</body>
+</html>
