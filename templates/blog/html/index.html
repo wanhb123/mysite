@@ -1,57 +1,47 @@
 <!DOCTYPE html>
-<html>
-<meta charset="utf-8">
-<title>Django</title>
-<style>
-	#header{
-		width: 100%;
-		height: 150px;
-		text-align: right;
-		font-weight: bold;
-		font-size: 12px;
-		background-color: rgba(100,255,251,0.5);
-	}
-	#ender{
-		width: 100%;
-		height: 500px;
-		opacity: 0.4;
-		background-color: rgba(100,265,151,0.5);
-	}
-	.django{
-		width: 100%;
-		height: 300px;
-		text-align: center;
-		line-height: 300px;
-		vertical-align: middle;
-		background-color:white;
-	}
-	#o66{
-		position: absolute;
-		top: 50%px;
-		right: 100px;
-		text-align: right;
-		background-color:white;
-	}
-	.img{
-		width: 100%;
-		height: 100px;
-	}
-</style>
-<body>
-<div id="header">	
-</div>
-<div class="django">
-	<h1>欢迎来到Django世界！</h1>
-</div>
-<form action="/blog/login/" method="post">
-    {% csrf_token %}
-    <div align="center" style="color: blue ">
-	    <input type="text" name="username" placeholder="请输入用户名">
-	    <input type="password" name="password" placeholder="请输入密码">
-        {{ error }}
-	    <input type="submit" value="登陆">
+<!DOCTYPE
+ html PUBLIC "-//W3C//DTD
+ XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta http-equiv="Content-Type" content="text/html;
+ charset=utf-8" />
+    <title>我的 主页</title>
+    <style type="text/css">
+        #Container {
+            width: 100%;
+            height: 1000px;
+            margin: 0 auto; /*设置整个容器在浏览器中水平居中*/
+            text-align: center;	
+			font-weight: bold;
+			font-size: 12px;
+			background-color: rgba(38,188,213,0.5);
+        }
+        #header {
+        	height:160px;
+        	text-align: center;
+        	font-size: 12px;
+        	line-height: 160px;
+        	background-color: rgba(150,265,151,0.5); 
+        }
+        #middle {
+        	height: 200px;
+        	text-align: center;
+        	line-height: 200px;
+        	background-color: rgba(225,238,210,0.8);
+        }
+    </style>
+    <div id="Container">
+ 		<div id="header">
+ 			<h1>欢迎来到Django世界！</h1>
+ 		</div>
+ 		<div id="middle">
+ 			<form action="/blog/login/" method="post">
+ 				{% csrf_token %}
+ 				<input type="text" name="username", placeholder="请输入用户名">
+ 				<input type="password" name="password" placeholder="请输入密码">
+ 				{{ error }}
+ 				<input type="submit" value="登录">
+ 			</form>
+ 		</div>
     </div>
-</form>
-<div id="ender"></div>
-</body>
-</html>
