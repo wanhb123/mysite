@@ -1,7 +1,9 @@
 from django.contrib import auth
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.hashers import make_password
-from django.shortcuts import render, redirect, reverse
+from django.core.exceptions import ValidationError
+from django.http import JsonResponse
+from django.shortcuts import render, redirect
 from .models import UserInfo, Event, Guest
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 
@@ -53,12 +55,29 @@ def guest_manage(request):
 def search_name(request):
     username = request.session.get('user', '')
     search_result = request.GET.get("name", "")
-    try:
-        event_list = Event.objects.filter(title_name__contains=search_result)
-    except Exception as e:
-        return render(request, "blog/html/event_manage.html", {'errMsg': e})
-    finally:
-        return render(request, "blog/html/event_manage.html", {"user": username, "events": event_list})
+    print(search_result)
+    event_list = Event.objects.filter(title_name__contains=search_result)
+    print(event_list)
+    return render(request, "blog/html/event_manage.html", {"user": username, "events": event_list})
+
+
+@login_required
+def search_phone(request):
+    username = request.session.get('user', '')
+    phone = request.GET.get('phone')
+    if not phone:
+        render(request, 'blog/html/guest_manage.html', {'user': username, 'msg': '手机号不存在'})
+    else:
+        guest_list = Guest.objects.get(phone__contains=phone)
+        page = request.GET.get('page')
+        paginator = Paginator(guest_list, 5)
+        try:
+            content = paginator.page(page)
+        except EmptyPage:
+            content = paginator.page(paginator.num_pages)
+        except PageNotAnInteger:
+            content = paginator.page(1)
+        return render(request, 'blog/html/guest_manage.html', {'user': username, 'guests': content})
 
 
 def register(request):
@@ -71,8 +90,35 @@ def register(request):
     return render(request, 'blog/html/register.html')
 
 
-def error(request):
-    return render(request, 'blog/html/404.html')
+@login_required
+def add_event1(request):
+    return render(request, 'blog/html/add_event.html')
+
+
+@login_required
+def add_event(request):
+    eid = request.POST.get('eid', '')  # 发布会
+    name = request.POST.get('title_name', '')  # 发布会标题
+    limit = request.POST.get('limit', '')  # 限制人数
+    status = request.POST.get('status', '')  # 状态
+    address = request.POST.get('address', '')  # 地址
+    start_time = request.POST.get('start_time', '')  # 发布会时间
+    if eid == '' or name == '' or limit == '' or address == '' or start_time == '':
+        return JsonResponse({'status': 10021, 'message': 'parameter error'})
+    result = Event.objects.filter(id=eid)
+    if result:
+        return JsonResponse({'status': 10022, 'message': 'event id already exists'})
+    result = Event.objects.filter(name=name)
+    if result:
+        return JsonResponse({'status': 10023, 'message': 'event name already exists'})
+    if status == '':
+        status = 1
+    try:
+        Event.objects.create(id=eid, name=name, limit=limit, address=address, status=int(status), start_time=start_time)
+    except ValidationError:
+        error = 'start_time format error. It must be in YYYY-MM-DD HH:MM:SS format.'
+        return JsonResponse({'status': 10024, 'message': error})
+    return JsonResponse({'status': 200, 'message': 'add event success'})
 
 
 def logout(request):

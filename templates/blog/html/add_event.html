@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>添加发布会</title>
+</head>
+<body>
+    <form action="/blog/event_manage/" method="post">
+        {% csrf_token %}
+        <input type="text" name="eid" placeholder="请输入发布会id"><br>
+        <input type="text" name="name" placeholder="请输入发布会标题"><br>
+        <input type="text" name="limit" placeholder="请输入限制人数"><br>
+        <input type="text" name="status" placeholder="请输入状态"><br>
+        <input type="text" name="address" placeholder="请输入地址"><br>
+        <input type="text" name="start_time" placeholder="请输入开始时间"><br>
+        <input style="text-align: center" type="submit" value="提交">
+    </form>
+</body>
+</html>
